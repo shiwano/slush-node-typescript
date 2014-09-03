@@ -36,8 +36,8 @@ gulp.task('default', function(done) {
             .pipe(template(answers))
             .pipe(rename(function (path) {
               path.basename = path.basename
-                .replace('name', answers.name)
-                .replace(/^dot\./, '.');
+                .replace(/^dot/, '')
+                .replace('name', answers.name);
             }))
             .pipe(conflict('./'))
             .pipe(gulp.dest('./'))
