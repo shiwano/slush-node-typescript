@@ -35,9 +35,11 @@ gulp.task('default', function(done) {
           gulp.src(__dirname + '/templates/**', {dot: true})
             .pipe(template(answers))
             .pipe(rename(function (path) {
-              path.basename = path.basename
-                .replace(/^dot/, '')
-                .replace('name', answers.name);
+              if (path.basename === 'dot') {
+                path.basename = path.basename.replace('dot', '');
+              } else {
+                path.basename = path.basename.replace('name', answers.name);
+              }
             }))
             .pipe(conflict('./'))
             .pipe(gulp.dest('./'))
