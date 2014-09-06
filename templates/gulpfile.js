@@ -49,7 +49,7 @@ gulp.task('test:changed', function () {
     .pipe(plugins.sourcemaps.init())
     .pipe(plugins.type(tsProject)).js
     .pipe(plugins.espower())
-    .pipe(plugins.sourcemaps.write({includeContent: false}))
+    .pipe(plugins.sourcemaps.write())
     .pipe(gulp.dest(paths.testDest))
     .pipe(plugins.mocha(mochaOptions));
 });
@@ -89,9 +89,9 @@ function hasChangedForTest(stream, callback, sourceFile, destPath) {
   if (sourceFile.stat.mtime > destStat.mtime) {
     stream.push(sourceFile);
   } else if (/_test.ts$/.test(sourceFile.path)) {
-    var testDir = process.cwd() + '/test';
-    var testTargetPath = sourceFile.path.replace(/_test.ts$/, '.ts');
-    testTargetPath = testTargetPath.replace(testDir, process.cwd());
+    var testTargetPath = sourceFile.path
+      .replace(/_test.ts$/, '.ts')
+      .replace(process.cwd() + '/test', process.cwd());
     var testTargetStat = fs.statSync(testTargetPath);
 
     if (testTargetStat.mtime > destStat.mtime) {
