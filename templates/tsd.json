@@ -11,9 +11,6 @@
     "mocha/mocha.d.ts": {
       "commit": "9d2478b8a80febe1d89a5d35cdf6051d121f5437"
     },
-    "chai/chai.d.ts": {
-      "commit": "9d2478b8a80febe1d89a5d35cdf6051d121f5437"
-    },
     "sinon/sinon.d.ts": {
       "commit": "9d2478b8a80febe1d89a5d35cdf6051d121f5437"
     },
