@@ -14,7 +14,7 @@ var paths = {
   typescriptFiles: '{src,test}/**/*.ts'
 };
 
-var tsProject = plugins.type.createProject({
+var tsProject = plugins.typescript.createProject({
   target: 'ES5',
   module: 'commonjs',
   noImplicitAny: true
@@ -47,7 +47,7 @@ gulp.task('test:changed', function () {
     .pipe(plugins.plumber())
     .pipe(plugins.changed(paths.testDest, {extension: '.js', hasChanged: hasChangedForTest}))
     .pipe(plugins.sourcemaps.init())
-    .pipe(plugins.type(tsProject)).js
+    .pipe(plugins.typescript(tsProject)).js
     .pipe(plugins.espower())
     .pipe(plugins.sourcemaps.write())
     .pipe(gulp.dest(paths.testDest))
@@ -64,7 +64,7 @@ gulp.task('clean:testDest', function(callback) {
 
 gulp.task('compile', ['clean:dest'], function(){
   return gulp.src(paths.src)
-    .pipe(plugins.type(tsProject)).js
+    .pipe(plugins.typescript(tsProject)).js
     .pipe(gulp.dest(paths.dest));
 });
 
@@ -75,7 +75,7 @@ gulp.task('build', function(callback) {
 gulp.task('default', ['build']);
 
 gulp.task('watch', function () {
-  gulp.watch(paths.typescriptFiles, ['tslint', 'test:changed']);
+  gulp.watch(paths.typescriptFiles, ['test:changed']);
 });
 
 function hasChangedForTest(stream, callback, sourceFile, destPath) {
