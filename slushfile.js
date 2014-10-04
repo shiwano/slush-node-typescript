@@ -55,27 +55,28 @@ gulp.task('default', function(done) {
 
 gulp.task('generate', function(done) {
   inquirer.prompt([
-    {type: 'input', name: 'name', message: 'file name', default: gulp.args.join('_')},
+    {type: 'input', name: 'path', message: 'Path (dirname + basename)', default: gulp.args.join('_')},
+    {type: 'list', name: 'format', message: 'Choose a script format', choices: ['class', 'module'], default: 'class'},
     {type: 'confirm', name: 'moveon', message: 'OK?'}
   ],
 
   function(answers) {
     if (!answers.moveon) { return done(); }
 
-    answers.name = answers.name.replace(/^\/+|\/+$/g, '');
-    answers.basename = path.basename(answers.name, '.ts');
-    answers.dirname = path.dirname(answers.name);
+    answers.path = answers.path.replace(/^\/+|\/+$/g, '');
+    answers.basename = path.basename(answers.path, '.ts');
+    answers.dirname = path.dirname(answers.path);
     answers.classifyName = inflection.classify(answers.basename);
 
     answers.relativeRootDir = path.relative('src/' + answers.dirname, process.cwd()) || '.';
 
-    gulp.src(__dirname + '/templates-generate/**')
+    gulp.src(__dirname + '/templates-generate/**/*-' + answers.format + '.ts')
       .pipe(template(answers))
       .pipe(rename(function (file) {
-        if (file.basename.indexOf('name') >= 0) {
-          file.dirname = path.join(file.dirname, answers.dirname);
-          file.basename = file.basename.replace('name', answers.basename);
-        }
+        file.dirname = path.join(file.dirname, answers.dirname);
+        file.basename = file.basename
+          .replace('-' + answers.format, '')
+          .replace('name', answers.basename);
       }))
       .pipe(conflict('./'))
       .pipe(gulp.dest('./'))
