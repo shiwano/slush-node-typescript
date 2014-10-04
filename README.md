@@ -32,6 +32,16 @@ Initiate the generator:
 $ slush node-typescript
 ```
 
+### Tasks
+
+#### generate
+
+```bash
+$ slush node-typescript:generate foo/bar
+```
+
+Will generate `src/foo/bar.ts` and `test/src/foo/bar_test.ts` to your package.
+
 ### Conventions
 
 The generator expects a few conventions. They are easy to change if they are not suitable.
@@ -39,7 +49,7 @@ The generator expects a few conventions. They are easy to change if they are not
 * Source code for your npm package is in the `src` directory.
 * Test code is in the `test` directory.
 * Compiled JavaScript code is outputed to the `lib` directory.
-* The package `main` module is located at `lib/packageName.js`.
+* The package `main` module is located at `lib/{packageName}.js`.
 
 ## Getting To Know Slush
 
