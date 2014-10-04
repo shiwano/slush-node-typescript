@@ -37,7 +37,7 @@ gulp.task('default', function(done) {
           gulp.src(__dirname + '/templates/**', {dot: true})
             .pipe(template(answers))
             .pipe(rename(function (file) {
-              if (file.basename === 'dot') {
+              if (file.basename.indexOf('dot') === 0) {
                 file.basename = file.basename.replace('dot', '');
               } else {
                 file.basename = file.basename.replace('name', answers.name);
