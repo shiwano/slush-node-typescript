@@ -9,5 +9,5 @@
 /// <reference path="../typings/tsd.d.ts" />
 
 export function awesome(): string {
-  return "awesome";
+  return 'awesome';
 }

@@ -2,7 +2,7 @@
 
 class <%= classifyName %> {
   public awesome(): string {
-    return "awesome";
+    return 'awesome';
   }
 }
 
