@@ -1,7 +1,7 @@
 require('<%= relativeRootDir %>/test_helper');
 
 import assert = require('power-assert');
-import <%= basename %> = require('<%= relativeRootDir %>/../src/<%= dirname %>/<%= basename %>');
+import <%= basename %> = require('<%= relativeRootDir %>/../src/<%= dirname === '.' ? '' : dirname + '/' %><%= basename %>');
 
 describe('<%= basename %>', () => {
   describe('.awesome', () => {
