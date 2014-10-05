@@ -9,6 +9,7 @@ var plugins = require('gulp-load-plugins')();
 var paths = {
   gulpfile: 'gulpfile.js',
   src: 'src/**/*.ts',
+  test: 'test/src/**/*_test.ts',
   dest: 'lib/',
   testDest: '.tmp/',
   typescriptFiles: '{src,test}/**/*.ts'
@@ -75,7 +76,7 @@ gulp.task('build', function(callback) {
 gulp.task('default', ['build']);
 
 gulp.task('watch', function () {
-  gulp.watch(paths.typescriptFiles, ['test:changed']);
+  gulp.watch([paths.src, paths.test], ['test:changed']);
 });
 
 function hasChangedForTest(stream, callback, sourceFile, destPath) {
