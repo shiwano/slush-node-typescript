@@ -1,7 +1,6 @@
 /// <reference path="../typings/tsd.d.ts" />
 
-import assert = require('power-assert');
-global.assert = assert;
+require('source-map-support').install();
 
-import sinon = require('sinon');
-global.sinon = sinon;
+global.assert = require('power-assert');
+global.sinon = require('sinon');
