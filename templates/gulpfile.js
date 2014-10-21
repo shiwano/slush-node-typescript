@@ -52,7 +52,7 @@ gulp.task('test:changed', function () {
     .pipe(plugins.espower())
     .pipe(plugins.sourcemaps.write())
     .pipe(gulp.dest(paths.testDest))
-    .pipe(plugins.mocha(mochaOptions));
+    .pipe(plugins.spawnMocha(mochaOptions));
 });
 
 gulp.task('clean:dest', function(callback) {
