@@ -1,7 +1,7 @@
 {
   "name": "slush-node-typescript",
   "description": "A slush generator for Node.js and TypeScript.",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "homepage": "https://github.com/shiwano/slush-node-typescript",
   "author": {
     "name": "Shogo Iwano",
