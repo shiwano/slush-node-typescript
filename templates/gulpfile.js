@@ -39,20 +39,12 @@ gulp.task('tslint', function(){
     .pipe(plugins.tslint.report('verbose'));
 });
 
-gulp.task('test', function(callback) {
-  runSequence('clean:testDest', 'test:changed', callback);
+gulp.task('test', ['clean:testDest'], function() {
+  return test(false);
 });
 
 gulp.task('test:changed', function () {
-  return gulp.src(paths.typescriptFiles)
-    .pipe(plugins.plumber())
-    .pipe(plugins.changed(paths.testDest, {extension: '.js', hasChanged: hasChangedForTest}))
-    .pipe(plugins.sourcemaps.init())
-    .pipe(plugins.typescript(tsProject)).js
-    .pipe(plugins.espower())
-    .pipe(plugins.sourcemaps.write())
-    .pipe(gulp.dest(paths.testDest))
-    .pipe(plugins.spawnMocha(mochaOptions));
+  return test(true);
 });
 
 gulp.task('clean:dest', function(callback) {
@@ -78,6 +70,20 @@ gulp.task('default', ['build']);
 gulp.task('watch', function () {
   gulp.watch([paths.src, paths.test], ['test:changed']);
 });
+
+function test(watching) {
+  return gulp.src(paths.typescriptFiles)
+    .pipe(plugins.plumber({errorHandler: function() {
+      if (!watching) { process.exit(1); }
+    }}))
+    .pipe(plugins.changed(paths.testDest, {extension: '.js', hasChanged: hasChangedForTest}))
+    .pipe(plugins.sourcemaps.init())
+    .pipe(plugins.typescript(tsProject)).js
+    .pipe(plugins.espower())
+    .pipe(plugins.sourcemaps.write())
+    .pipe(gulp.dest(paths.testDest))
+    .pipe(plugins.spawnMocha(mochaOptions));
+}
 
 function hasChangedForTest(stream, callback, sourceFile, destPath) {
   if (!fs.existsSync(destPath)) {
