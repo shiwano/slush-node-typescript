@@ -43,7 +43,7 @@ gulp.task('test', ['clean:testDest'], function() {
   return test(false);
 });
 
-gulp.task('test:changed', function () {
+gulp.task('test:watch', function () {
   return test(true);
 });
 
@@ -57,6 +57,9 @@ gulp.task('clean:testDest', function(callback) {
 
 gulp.task('compile', ['clean:dest'], function(){
   return gulp.src(paths.src)
+    .pipe(plugins.plumber({errorHandler: function() {
+      process.exit(1);
+    }}))
     .pipe(plugins.typescript(tsProject)).js
     .pipe(gulp.dest(paths.dest));
 });
@@ -68,7 +71,7 @@ gulp.task('build', function(callback) {
 gulp.task('default', ['build']);
 
 gulp.task('watch', function () {
-  gulp.watch([paths.src, paths.test], ['test:changed']);
+  gulp.watch([paths.src, paths.test], ['test:watch']);
 });
 
 function test(watching) {
