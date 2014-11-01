@@ -32,7 +32,7 @@ gulp.task('jshint', function() {
     .pipe(plugins.jshint.reporter('default'));
 });
 
-gulp.task('tslint', function(){
+gulp.task('tslint', function() {
   return gulp.src(paths.typescriptFiles)
     .pipe(plugins.plumber())
     .pipe(plugins.tslint())
