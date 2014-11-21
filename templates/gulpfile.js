@@ -5,6 +5,8 @@ var gulp = require('gulp');
 var del = require('del');
 var runSequence = require('run-sequence');
 var plugins = require('gulp-load-plugins')();
+var spawn = require('child_process').spawn;
+var open = require('open');
 
 var paths = {
   gulpfile: 'gulpfile.js',
@@ -40,11 +42,15 @@ gulp.task('tslint', function() {
 });
 
 gulp.task('test', ['clean:testDest'], function() {
-  return test(false);
+  return test(false, false);
 });
 
-gulp.task('test:watch', function () {
-  return test(true);
+gulp.task('test:watch', function() {
+  return test(true, false);
+});
+
+gulp.task('test:watch:debug', function() {
+  return test(true, true);
 });
 
 gulp.task('clean:dest', function(callback) {
@@ -70,11 +76,18 @@ gulp.task('build', function(callback) {
 
 gulp.task('default', ['build']);
 
-gulp.task('watch', function () {
+gulp.task('watch', function() {
   gulp.watch([paths.src, paths.test], ['test:watch']);
 });
 
-function test(watching) {
+gulp.task('watch:debug', function() {
+  spawn('node', ['node_modules/node-inspector/bin/inspector.js']);
+  gulp.watch([paths.src, paths.test], ['test:watch:debug']);
+});
+
+function test(watching, debug) {
+  mochaOptions.debug = mochaOptions.debugBrk = debug;
+
   return gulp.src(paths.typescriptFiles)
     .pipe(plugins.plumber({errorHandler: function() {
       if (!watching) { process.exit(1); }
@@ -85,6 +98,9 @@ function test(watching) {
     .pipe(plugins.espower())
     .pipe(plugins.sourcemaps.write())
     .pipe(gulp.dest(paths.testDest))
+    .on('end', function() {
+      if (debug) { open('http://127.0.0.1:8080/debug?port=5858'); }
+    })
     .pipe(plugins.spawnMocha(mochaOptions));
 }
 
