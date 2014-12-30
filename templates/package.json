@@ -29,25 +29,30 @@
     "test": "./node_modules/gulp/bin/gulp.js"
   },
   "devDependencies": {
-    "del": "^0.1.2",
-    "gulp": "^3.8.7",
-    "gulp-changed": "^1.0.0",
-    "gulp-espower": "^0.9.0",
-    "gulp-jshint": "^1.8.4",
-    "gulp-license": "^1.0.0",
-    "gulp-load-plugins": "^0.5.3",
-    "gulp-plumber": "^0.6.5",
-    "gulp-sourcemaps": "^1.1.4",
-    "gulp-spawn-mocha": "^0.4.1",
-    "gulp-tslint": "^1.3.0",
-    "gulp-typescript": "^2.1.0",
-    "node-inspector": "^0.7.4",
+    "del": "^1.1.1",
+    "glob": "^4.3.2",
+    "gulp": "^3.8.10",
+    "gulp-changed": "^1.1.0",
+    "gulp-espower": "^0.10.0",
+    "gulp-jshint": "^1.9.0",
+    "gulp-load-plugins": "^0.8.0",
+    "gulp-plumber": "^0.6.6",
+    "gulp-replace": "^0.5.0",
+    "gulp-sourcemaps": "^1.2.8",
+    "gulp-spawn-mocha": "^0.5.1",
+    "gulp-tslint": "^1.4.1",
+    "gulp-typescript": "^2.3.0",
+    "merge-stream": "^0.1.6",
+    "node-inspector": "^0.8.1",
     "open": "0.0.5",
-    "power-assert": "^0.9.0",
-    "run-sequence": "^0.3.6",
-    "sinon": "^1.10.3",
-    "source-map-support": "^0.2.7"
+    "power-assert": "^0.10.0",
+    "run-sequence": "^1.0.2",
+    "sinon": "^1.12.2",
+    "source-map-support": "^0.2.8"
   },
   "keywords": [],
   "dependencies": {}
+  "typescript": {
+    "definition": "lib/<%= name %>.d.ts"
+  }
 }
