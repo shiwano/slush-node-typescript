@@ -4,6 +4,7 @@ var fs = require('fs');
 var gulp = require('gulp');
 var del = require('del');
 var runSequence = require('run-sequence');
+var merge = require('merge-stream');
 var plugins = require('gulp-load-plugins')();
 var spawn = require('child_process').spawn;
 var open = require('open');
@@ -11,7 +12,7 @@ var open = require('open');
 var paths = {
   gulpfile: 'gulpfile.js',
   src: 'src/**/*.ts',
-  test: 'test/src/**/*_test.ts',
+  test: 'test/{src,integrations}/**/*_test.ts',
   dest: 'lib/',
   testDest: '.tmp/',
   typescriptFiles: '{src,test}/**/*.ts'
@@ -20,7 +21,8 @@ var paths = {
 var tsProject = plugins.typescript.createProject({
   target: 'ES5',
   module: 'commonjs',
-  noImplicitAny: true
+  noImplicitAny: true,
+  declarationFiles: true
 });
 
 var mochaOptions = {
@@ -41,16 +43,16 @@ gulp.task('tslint', function() {
     .pipe(plugins.tslint.report('verbose'));
 });
 
-gulp.task('test', ['clean:testDest'], function() {
-  return test(false, false);
+gulp.task('test', ['clean:testDest'], function(callback) {
+  test(false, false, callback);
 });
 
-gulp.task('test:watch', function() {
-  return test(true, false);
+gulp.task('test:watch', function(callback) {
+  test(true, false, callback);
 });
 
-gulp.task('test:watch:debug', function() {
-  return test(true, true);
+gulp.task('test:watch:debug', function(callback) {
+  test(true, true, callback);
 });
 
 gulp.task('clean:dest', function(callback) {
@@ -62,12 +64,18 @@ gulp.task('clean:testDest', function(callback) {
 });
 
 gulp.task('compile', ['clean:dest'], function(){
-  return gulp.src(paths.src)
+  var tsStream = gulp.src(paths.src)
     .pipe(plugins.plumber({errorHandler: function() {
       process.exit(1);
     }}))
-    .pipe(plugins.typescript(tsProject)).js
+    .pipe(plugins.typescript(tsProject));
+
+  var jsStream = tsStream.js
     .pipe(gulp.dest(paths.dest));
+  var dtsStream = tsStream.dts
+    .pipe(plugins.replace(/^\/\/\/\s*<reference\s+path="[\.\/]+typings\/tsd.d.ts"\s*\/>$/gm, ''))
+    .pipe(gulp.dest(paths.dest));
+  return merge(jsStream, dtsStream);
 });
 
 gulp.task('build', function(callback) {
@@ -85,12 +93,16 @@ gulp.task('watch:debug', function() {
   gulp.watch([paths.src, paths.test], ['test:watch:debug']);
 });
 
-function test(watching, debug) {
+function test(watching, debug, callback) {
   mochaOptions.debug = mochaOptions.debugBrk = debug;
 
-  return gulp.src(paths.typescriptFiles)
+  gulp.src(paths.typescriptFiles)
     .pipe(plugins.plumber({errorHandler: function() {
-      if (!watching) { process.exit(1); }
+      if (watching) {
+        this.emit('end');
+      } else {
+        process.exit(1);
+      }
     }}))
     .pipe(plugins.changed(paths.testDest, {extension: '.js', hasChanged: hasChangedForTest}))
     .pipe(plugins.sourcemaps.init())
@@ -101,7 +113,8 @@ function test(watching, debug) {
     .on('end', function() {
       if (debug) { open('http://127.0.0.1:8080/debug?port=5858'); }
     })
-    .pipe(plugins.spawnMocha(mochaOptions));
+    .pipe(plugins.spawnMocha(mochaOptions))
+    .on('end', callback);
 }
 
 function hasChangedForTest(stream, callback, sourceFile, destPath) {
@@ -118,10 +131,13 @@ function hasChangedForTest(stream, callback, sourceFile, destPath) {
     var testTargetPath = sourceFile.path
       .replace(/_test.ts$/, '.ts')
       .replace(process.cwd() + '/test', process.cwd());
-    var testTargetStat = fs.statSync(testTargetPath);
 
-    if (testTargetStat.mtime > destStat.mtime) {
-      stream.push(sourceFile);
+    if (fs.existsSync(testTargetPath)) {
+      var testTargetStat = fs.statSync(testTargetPath);
+
+      if (testTargetStat.mtime > destStat.mtime) {
+        stream.push(sourceFile);
+      }
     }
   }
 
