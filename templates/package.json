@@ -1,26 +1,26 @@
 {
-  "name": "<%= name %>",
-  "description": "<%= description %>",
+  "name": "test",
+  "description": "The best project ever.",
   "version": "0.1.0",
-  "homepage": "https://github.com/<%= github_user_name %>/<%= name %>",
+  "homepage": "https://github.com/shiwano/test",
   "author": {
-    "name": "<%= author_name %>",
-    "email": "<%= author_email %>"
+    "name": "Shogo Iwano",
+    "email": "shiwano@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/<%= github_user_name %>/<%= name %>.git"
+    "url": "git://github.com/shiwano/test.git"
   },
   "bugs": {
-    "url": "https://github.com/<%= github_user_name %>/<%= name %>/issues"
+    "url": "https://github.com/shiwano/test/issues"
   },
   "licenses": [
     {
-      "type": "<%= license  %>",
-      "url": "https://github.com/<%= github_user_name %>/<%= name %>/blob/master/LICENSE"
+      "type": "MIT",
+      "url": "https://github.com/shiwano/test/blob/master/LICENSE"
     }
   ],
-  "main": "lib/<%= name %>",
+  "main": "lib/test",
   "engines": {
     "node": ">= 0.10.0",
     "npm": ">= 1.4.0"
@@ -51,8 +51,8 @@
     "source-map-support": "^0.2.8"
   },
   "keywords": [],
-  "dependencies": {}
+  "dependencies": {},
   "typescript": {
-    "definition": "lib/<%= name %>.d.ts"
+    "definition": "lib/test.d.ts"
   }
 }
