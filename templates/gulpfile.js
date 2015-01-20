@@ -12,10 +12,10 @@ var open = require('open');
 var paths = {
   gulpfile: 'gulpfile.js',
   src: 'src/**/*.ts',
-  test: 'test/{src,integrations}/**/*_test.ts',
+  test: 'test/{src,integration}/**/*_test.ts',
   dest: 'lib/',
   testDest: '.tmp/',
-  typescriptFiles: '{src,test}/**/*.ts'
+  typescriptFiles: ['{src,test}/**/*.ts', '!test/fixtures/**/*.ts']
 };
 
 var tsProject = plugins.typescript.createProject({
@@ -33,7 +33,8 @@ gulp.task('jshint', function() {
   return gulp.src(paths.gulpfile)
     .pipe(plugins.plumber())
     .pipe(plugins.jshint())
-    .pipe(plugins.jshint.reporter('default'));
+    .pipe(plugins.jshint.reporter('default'))
+    .pipe(plugins.jshint.reporter('fail'));
 });
 
 gulp.task('tslint', function() {
@@ -95,6 +96,7 @@ gulp.task('watch:debug', function() {
 
 function test(watching, debug, callback) {
   mochaOptions.debug = mochaOptions.debugBrk = debug;
+  var isCompleted = false;
 
   gulp.src(paths.typescriptFiles)
     .pipe(plugins.plumber({errorHandler: function() {
@@ -114,7 +116,12 @@ function test(watching, debug, callback) {
       if (debug) { open('http://127.0.0.1:8080/debug?port=5858'); }
     })
     .pipe(plugins.spawnMocha(mochaOptions))
-    .on('end', callback);
+    .on('end', function() {
+      if (!isCompleted) {
+        callback();
+        isCompleted = true;
+      }
+    });
 }
 
 function hasChangedForTest(stream, callback, sourceFile, destPath) {
