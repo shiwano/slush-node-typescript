@@ -6,7 +6,7 @@
  * Licensed under the <%= license %> license.
  */
 
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../typings/bundle.d.ts" />
 
 export function awesome(): string {
   return 'awesome';

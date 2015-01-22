@@ -1,4 +1,4 @@
-/// <reference path="<%= relativeRootDir %>/typings/tsd.d.ts" />
+/// <reference path="<%= relativeRootDir %>/typings/bundle.d.ts" />
 
 export function awesome(): string {
   return 'awesome';
