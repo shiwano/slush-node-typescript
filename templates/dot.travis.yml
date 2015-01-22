@@ -4,5 +4,5 @@ node_js:
 before_install:
   - npm update -g npm
   - npm cache clean -g
-  - npm install -g tsd
-  - tsd reinstall --resolve --save
+  - npm install -g dtsm
+  - dtsm install
