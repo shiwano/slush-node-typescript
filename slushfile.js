@@ -15,12 +15,16 @@ gulp.task('default', function(done) {
     if (err) { return done(err); }
 
     license.licenseTypes(function(err, licenseTypes) {
+      // Substitute empty values in case configuration isn't specified.
+      var user = gitConfig.user ? gitConfig.user : {};
+      var github = gitConfig.github ? gitConfig.github : {};
+
       inquirer.prompt([
         {type: 'input', name: 'name', message: 'Project name', default: gulp.args.join('-')},
         {type: 'input', name: 'description', message: 'Project description', default: 'The best project ever.'},
-        {type: 'input', name: 'author_name', message: 'Project author name', default: gitConfig.user.name},
-        {type: 'input', name: 'author_email', message: 'Project author name', default: gitConfig.user.email},
-        {type: 'input', name: 'github_user_name', message: 'GitHub user name', default: gitConfig.github.user},
+        {type: 'input', name: 'author_name', message: 'Project author name', default: user.name},
+        {type: 'input', name: 'author_email', message: 'Project author name', default: user.email},
+        {type: 'input', name: 'github_user_name', message: 'GitHub user name', default: github.user},
         {type: 'list', name: 'licenseType', message: 'Choose your license type', choices: licenseTypes, default: 'mit'},
         {type: 'confirm', name: 'moveon', message: 'OK?'}
       ],
