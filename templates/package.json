@@ -1,26 +1,21 @@
 {
-  "name": "test",
-  "description": "The best project ever.",
+  "name": "<%= name %>",
+  "description": "<%= description %>",
   "version": "0.1.0",
-  "homepage": "https://github.com/shiwano/test",
+  "homepage": "https://github.com/<%= github_user_name %>/<%= name %>",
   "author": {
-    "name": "Shogo Iwano",
-    "email": "shiwano@gmail.com"
+    "name": "<%= author_name %>",
+    "email": "<%= author_email %>"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/shiwano/test.git"
+    "url": "git://github.com/<%= github_user_name %>/<%= name %>.git"
   },
   "bugs": {
-    "url": "https://github.com/shiwano/test/issues"
+    "url": "https://github.com/<%= github_user_name %>/<%= name %>/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/shiwano/test/blob/master/LICENSE"
-    }
-  ],
-  "main": "lib/test",
+  "license": "<%= license  %>",
+  "main": "lib/<%= name %>",
   "engines": {
     "node": ">= 0.10.0",
     "npm": ">= 1.4.0"
@@ -53,6 +48,6 @@
   "keywords": [],
   "dependencies": {},
   "typescript": {
-    "definition": "lib/test.d.ts"
+    "definition": "lib/<%= name %>.d.ts"
   }
 }
