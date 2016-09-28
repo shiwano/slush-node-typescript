@@ -4,6 +4,10 @@
 
 ## Getting Started
 
+Sample project can be found [here](https://github.com/kristianmandrup/ai-component-bundler)
+
+Use [typings](https://github.com/typings/typings) CLI to install type definitions.
+
 ### Installation
 
 Install `slush-node-typescript` globally:
@@ -31,6 +35,10 @@ Initiate the generator:
 ```bash
 $ slush node-typescript
 ```
+
+Install type definitions to run tests:
+
+`typings install chai mocha node --global --save`
 
 ### Tasks
 

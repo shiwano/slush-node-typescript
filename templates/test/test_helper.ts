@@ -1,6 +1,7 @@
-/// <reference path="../typings/bundle.d.ts" />
+/// <reference path="../../typings/index.d.ts" />
 
-require('source-map-support').install();
+// import * as sourceMaps from 'source-map-support';
+// sourceMaps.install();
 
-global.assert = require('power-assert');
-global.sinon = require('sinon');
+// global.assert = require('power-assert');
+// global.sinon = require('sinon');
