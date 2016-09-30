@@ -40,6 +40,10 @@ Install type definitions to run tests:
 
 `typings install chai mocha node --global --save`
 
+Install all the latest modules for testing:
+
+`npm install typescript webpack ts-loader chai karma karma-chai karma-mocha karma-phantomjs-launcher karma-sinon karma-typescript-preprocessor2 karma-webpack mocha phantomjs-prebuilt sinon --save-dev`
+
 ### Tasks
 
 #### generate

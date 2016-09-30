@@ -21,7 +21,8 @@
     "npm": ">= 3.0.0"
   },
   "scripts": {
-    "test": "./node_modules/gulp/bin/gulp.js"
+    "postinstall": "typings install --overwrite --save",
+    "test": "karma start"
   },
   "devDependencies": {
     "del": "^2.2.2",

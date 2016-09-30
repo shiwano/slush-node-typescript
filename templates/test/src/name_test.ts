@@ -1,7 +1,7 @@
 /// <reference path="../../typings/index.d.ts" />
 
 import '../test_helper';
-const expect = chai.expect;
+import { expect } from 'chai';
 
 import awesome from '../../src/<%= name %>';
 
