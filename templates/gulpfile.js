@@ -13,7 +13,7 @@ var paths = {
   gulpfile: 'gulpfile.js',
   src: 'src/**/*.ts',
   test: 'test/{src,integration}/**/*_test.ts',
-  dest: 'lib/',
+  dest: 'dist/',
   testDest: '.tmp/',
   typescriptFiles: ['{src,test}/**/*.ts', '!test/fixtures/**/*.ts']
 };

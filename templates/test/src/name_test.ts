@@ -1,5 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
 import '../test_helper';
 import { expect } from 'chai';
 

@@ -15,7 +15,7 @@
     "url": "https://github.com/<%= github_user_name %>/<%= name %>/issues"
   },
   "license": "<%= license  %>",
-  "main": "lib/<%= name %>",
+  "main": "dist/<%= name %>",
   "engines": {
     "node": ">= 5.0.0",
     "npm": ">= 3.0.0"
@@ -25,34 +25,45 @@
     "test": "karma start"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "del": "^2.2.2",
     "glob": "^7.1.0",
     "gulp": "^3.9.1",
     "gulp-changed": "^1.3.2",
     "gulp-espower": "^1.0.2",
     "gulp-jshint": "^2.0.1",
-    "jshint": "^2.0.1",
     "gulp-load-plugins": "^1.3.0",
     "gulp-plumber": "^1.1.0",
     "gulp-replace": "^0.5.4",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-spawn-mocha": "^3.1.0",
-    "mocha": "^3.0.0",
-    "istanbul": "^0.4.3",
     "gulp-tslint": "^3.0.1",
     "gulp-typescript": "^3.0.1",
-    "typescript": "^2.0.3",
+    "istanbul": "^0.4.3",
+    "jshint": "^2.0.1",
+    "karma": "^1.3.0",
+    "karma-chai": "^0.1.0",
+    "karma-mocha": "^1.2.0",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-sinon": "^1.0.5",
+    "karma-typescript-preprocessor2": "^1.2.1",
+    "karma-webpack": "^1.8.0",
     "merge-stream": "^1.0.0",
+    "mocha": "^3.1.0",
     "node-inspector": "^0.12.8",
     "open": "^0.0.5",
+    "phantomjs-prebuilt": "^2.1.12",
     "power-assert": "^1.4.1",
     "run-sequence": "^1.2.2",
     "sinon": "^1.17.6",
-    "source-map-support": "^0.4.2"
+    "source-map-support": "^0.4.2",
+    "ts-loader": "^0.8.2",
+    "typescript": "^2.0.3",
+    "webpack": "^1.13.2"
   },
   "keywords": [],
   "dependencies": {},
   "typescript": {
-    "definition": "lib/<%= name %>.d.ts"
+    "definition": "dist/<%= name %>.d.ts"
   }
 }
