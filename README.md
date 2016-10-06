@@ -1,6 +1,12 @@
-# slush-node-typescript
+# slush-node-typescript2
 
-> A slush generator for Node.js and TypeScript.
+> A slush generator for Node.js and TypeScript based on [slush-node-typescript](https://github.com/shiwano/slush-node-typescript) but adapted for TypeScript 2.x.
+
+> Extended to support *webpack* and more config options for testing:
+> - gulp or webpack as task managers
+> - karma and nightwatch for E2E testing
+> - istanbul for test coverage
+> - sinon for server mocking
 
 ## Getting Started
 
@@ -10,10 +16,10 @@ Use [typings](https://github.com/typings/typings) CLI to install type definition
 
 ### Installation
 
-Install `slush-node-typescript` globally:
+Install `slush-node-typescript2` globally:
 
 ```bash
-$ npm i -g slush-node-typescript
+$ npm i -g slush-node-typescript2
 ```
 
 Remember to install `slush` globally as well, if you haven't already:
@@ -33,14 +39,14 @@ $ mkdir node-typescript-package && cd node-typescript-package
 Initiate the generator:
 
 ```bash
-$ slush node-typescript
+$ slush node-typescript2
 ```
 
 Install type definitions to run tests:
 
 `typings install chai mocha node --global --save`
 
-Install all the latest modules for testing:
+(optionally) install all the latest modules for testing:
 
 `npm install typescript webpack ts-loader chai karma karma-chai karma-mocha karma-phantomjs-launcher karma-sinon karma-typescript-preprocessor2 karma-webpack mocha phantomjs-prebuilt sinon --save-dev`
 
@@ -49,7 +55,7 @@ Install all the latest modules for testing:
 #### generate
 
 ```bash
-$ slush node-typescript:generate foo/bar
+$ slush node-typescript2:generate foo/bar
 ```
 
 Will generate `src/foo/bar.ts` and `test/src/foo/bar_test.ts` to your package.
