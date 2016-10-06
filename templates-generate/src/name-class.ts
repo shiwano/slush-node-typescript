@@ -1,4 +1,4 @@
-/// <reference path="<%= relativeRootDir %>/typings/bundle.d.ts" />
+/// <reference path="<%= relativeRootDir %>/typings/index.d.ts" />
 
 class <%= classifyName %> {
   public awesome(): string {

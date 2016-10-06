@@ -15,39 +15,72 @@
     "url": "https://github.com/<%= github_user_name %>/<%= name %>/issues"
   },
   "license": "<%= license  %>",
-  "main": "lib/<%= name %>",
+  "main": "dist/<%= name %>",
   "engines": {
-    "node": ">= 0.10.0",
-    "npm": ">= 1.4.0"
+    "node": ">= 5.0.0",
+    "npm": ">= 3.0.0"
   },
   "scripts": {
-    "test": "./node_modules/gulp/bin/gulp.js"
+    "postinstall": "typings install --overwrite --save",
+    "test": "./node_modules/gulp/bin/gulp.js",
+    "karma": "karma start",
+    "test-wp": "mocha-webpack --webpack-config webpack.config-test.js \".tmp/test/**/*_test.js\"",
+    "cover": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha .tmp/test/src"
   },
   "devDependencies": {
-    "del": "^1.1.1",
-    "glob": "^4.3.5",
-    "gulp": "^3.8.10",
-    "gulp-changed": "^1.1.0",
-    "gulp-espower": "^0.10.0",
-    "gulp-jshint": "^1.9.0",
-    "gulp-load-plugins": "^0.8.0",
-    "gulp-plumber": "^0.6.6",
-    "gulp-replace": "^0.5.1",
-    "gulp-sourcemaps": "^1.3.0",
-    "gulp-spawn-mocha": "^0.5.2",
-    "gulp-tslint": "^1.4.1",
-    "gulp-typescript": "^2.4.0",
-    "merge-stream": "^0.1.7",
-    "node-inspector": "^0.8.3",
-    "open": "0.0.5",
-    "power-assert": "^0.10.1",
-    "run-sequence": "^1.0.2",
-    "sinon": "^1.12.2",
-    "source-map-support": "^0.2.9"
+    "chai": "^3.5.0",
+    "del": "^2.2.2",
+    "glob": "^7.1.0",
+    <% if (gulp) { %>
+    "gulp": "^3.9.1",
+    "gulp-changed": "^1.3.2",
+    "gulp-espower": "^1.0.2",
+    "gulp-jshint": "^2.0.1",
+    "gulp-load-plugins": "^1.3.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-replace": "^0.5.4",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-spawn-mocha": "^3.1.0",
+    "gulp-tslint": "^3.0.1",
+    "gulp-typescript": "^3.0.2",
+    <% } %>
+    <% if (istanbul) { %>
+    "istanbul": "^0.4.5",
+    <% } %>
+    "jshint": "^2.0.1",
+    <% if (karma) { %>
+    "karma": "^1.3.0",
+    "karma-chai": "^0.1.0",
+    "karma-mocha": "^1.2.0",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-sinon": "^1.0.5",
+    "karma-typescript-preprocessor2": "^1.2.1",
+    "karma-webpack": "^1.8.0",
+    <% } %>
+    "merge-stream": "^1.0.0",
+    "mocha": "^3.1.0",
+    <% if (webpack) { %>
+    "mocha-webpack": "^0.6.0",
+    <% } %>
+    "node-inspector": "^0.12.8",
+    "open": "^0.0.5",
+    "phantomjs-prebuilt": "^2.1.12",
+    "power-assert": "^1.4.1",
+    "run-sequence": "^1.2.2",
+    <% if (sinon) { %>
+    "sinon": "^1.17.6",
+    <% } %>
+    "source-map-support": "^0.4.3",
+    "ts-loader": "^0.8.2",
+    "typescript": "^2.0.3",
+    <% if (webpack) { %>
+    "webpack": "^1.13.2",
+    "webpack-node-externals": "^1.5.4"
+    <% } %>
   },
   "keywords": [],
   "dependencies": {},
   "typescript": {
-    "definition": "lib/<%= name %>.d.ts"
+    "definition": "dist/<%= name %>.d.ts"
   }
 }

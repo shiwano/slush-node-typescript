@@ -1,11 +1,12 @@
-require('../test_helper');
+/// <reference path="../../typings/index.d.ts" />
 
-import <%= name %> = require('../../src/<%= name %>');
+import { expect } from 'chai';
+
+import awesome from '../../src/<%= name %>';
 
 describe('<%= name %>', () => {
-  describe('.awesome', () => {
-    it('should return awesome string', () => {
-      assert.strictEqual(<%= name %>.awesome(), 'awesome');
-    });
+  it('should return awesome string', () => {
+    expect(awesome()).to.eql('awesome');
   });
 });
+

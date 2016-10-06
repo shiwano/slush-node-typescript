@@ -6,8 +6,6 @@
  * Licensed under the <%= license %> license.
  */
 
-/// <reference path="../typings/bundle.d.ts" />
-
-export function awesome(): string {
+export default function awesome(): string {
   return 'awesome';
 }

@@ -1,5 +1,5 @@
 {
-  "lib/*.js": {
+  "dist/*.js": {
     "type": "lib",
     "alternate": "src/{}.ts"
   },
