@@ -1,2 +1,4 @@
 node_modules/
 templates/LICENSE
+dist/
+.tmp/

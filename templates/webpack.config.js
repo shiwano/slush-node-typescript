@@ -1,5 +1,5 @@
 module.exports = {
-  entry: './src/<%= name %>.ts',
+  entry: './src/ai-component-bundler.ts',
   output: {
     filename: 'dist/bundle.js'
   },

@@ -69,7 +69,7 @@ gulp.task('compile', ['clean:dest'], function(){
     .pipe(plugins.plumber({errorHandler: function() {
       process.exit(1);
     }}))
-    .pipe(plugins.typescript(tsProject));
+    .pipe(tsProject());
 
   var jsStream = tsStream.js
     .pipe(gulp.dest(paths.dest));
@@ -108,7 +108,7 @@ function test(watching, debug, callback) {
     }}))
     .pipe(plugins.changed(paths.testDest, {extension: '.js', hasChanged: hasChangedForTest}))
     .pipe(plugins.sourcemaps.init())
-    .pipe(plugins.typescript(tsProject)).js
+    .pipe(tsProject()).js
     .pipe(plugins.espower())
     .pipe(plugins.sourcemaps.write())
     .pipe(gulp.dest(paths.testDest))
