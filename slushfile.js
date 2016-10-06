@@ -10,6 +10,28 @@ var gulp = require('gulp'),
     license = require('license'),
     gitConfig = require('git-config');
 
+function createIgnoreFileFun(answers) {
+  return function(file) {
+    if (!answers.karma && file.match(/karma/)) {
+      return true;
+    }
+
+    if (!answers.gulp && file.match(/gulp/)) {
+      return true;
+    }
+
+    if (!answers.webpack && file.match(/webpack/)) {
+      return true;
+    }
+
+    if (!answers.nightwatch && file.match(/nightwatch/)) {
+      return true;
+    }
+
+    return false;
+  }
+}
+
 gulp.task('default', function(done) {
   gitConfig(function (err, gitConfig) {
     if (err) { 
@@ -29,8 +51,56 @@ gulp.task('default', function(done) {
         {type: 'input', name: 'author_email', message: 'Project author name', default: user.email},
         {type: 'input', name: 'github_user_name', message: 'GitHub user name', default: github.user},
         {type: 'list', name: 'licenseType', message: 'Choose your license type', choices: licenseTypes, default: 'mit'},
+
+        {
+          type: 'checkbox',
+          name: 'taskManagers',
+          message: 'Select one or more task managers',
+          choices: ['gulp', 'webpack'],
+          // select at least 1
+          validate: function(input) {
+            return input.length > 0;
+          },
+          default: ['gulp']
+        },
+
+        {
+          type: 'confirm',
+          name: 'nightwatch',
+          message: 'Use nightwatch for E2E testing',
+          default: false
+        },
+
+        {
+          type: 'confirm',
+          name: 'karma',
+          message: 'Use Karma for testing',
+          default: false
+        },
+
+        {
+          type: 'confirm',
+          name: 'istanbul',
+          message: 'Use Istanbul for test coverage',
+          default: false
+        },
+
+        {
+          type: 'confirm',
+          name: 'sinon',
+          message: 'Use Sinon to mock server',
+          default: false
+        },
+
         {type: 'confirm', name: 'moveon', message: 'OK?', default: true}
       ]).then(function(answers) {
+        if (answers.taskManagers.indexOf('webpack') > 0) {
+          answers.webpack = true;
+        }
+        if (answers.taskManagers.indexOf('gulp') > 0) {
+          answers.gulp = true;
+        }
+
         if (!answers.moveon) {
           console.log('Aborting...');
           return done();
@@ -54,8 +124,11 @@ gulp.task('default', function(done) {
             fs.writeFileSync(__dirname + '/templates/LICENSE', licenseString);
             answers.license = answers.licenseType.toUpperCase();
 
+            var ignoreFile = createIgnoreFileFun(answers);
+
             console.log('create project...');
             gulp.src(__dirname + '/templates/**', {dot: true})
+              .pipe(gulpIgnore.exclude(ignoreFile))
               .pipe(template(answers))
               .pipe(rename(function (file) {
                 if (file.basename.indexOf('dot') === 0) {

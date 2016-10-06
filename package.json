@@ -31,6 +31,7 @@
     "gulp-conflict": "^0.4.0",
     "gulp-install": "^0.6.0",
     "gulp-rename": "^1.2.2",
+    "gulp-ignore": "^2.0.1",
     "gulp-template": "^4.0.0",
     "inflection": "^1.10.0",
     "inquirer": "^1.1.3",
